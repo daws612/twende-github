@@ -1,1 +1,43 @@
-<p>repo-list works!</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="" *ngIf="!(dataSource!=null && dataSource.data?.length==0)">
+                    <mat-table class="table table-hover " #reposTable [dataSource]="dataSource" matSort>
+
+                        <!--  Title Column -->
+                        <ng-container matColumnDef="title">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <span>{{element.name}}</span>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Author Column -->
+                        <ng-container matColumnDef="author">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Author</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <span>{{element.owner['login']}}</span>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                        <mat-row *matRowDef="let row; columns: displayedColumns; let index = index;" matRipple
+                            class="element-row">
+                        </mat-row>
+                    </mat-table>
+                </div>
+                <ngx-spinner name="reposTableSpinner" [fullScreen]="false" type="ball-spin-fade" size="small"
+                    [zIndex]="101" bdColor="rgba(255, 255, 255, 0.78)" color="#e43f34">
+                    <p style="color: #e43f34">Loading</p>
+                </ngx-spinner>
+                <div *ngIf="dataSource==null || dataSource.data?.length==0">
+                    <h3>
+                        No repositories found
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
