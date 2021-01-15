@@ -12,6 +12,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { RepoDetailsDialogComponent } from 'app/dialogs/repo-details-dialog/repo-details-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -24,9 +26,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatRippleModule,
     MatPaginatorModule,
     NgxSpinnerModule,
+    MatDialogModule,
   ],
   declarations: [
     RepoListComponent,
+    RepoDetailsDialogComponent
+  ],
+  entryComponents: [
+    RepoDetailsDialogComponent
   ]
 })
 

@@ -1,0 +1,34 @@
+<div mat-dialog-title>Repository Details</div>
+
+<mat-dialog-content>
+    <table class="table table-borderless table-sm outer-border mt-2" frame="box">
+        <tr>
+          <th>Repository Name:</th>
+          <td>{{repo.name}}</td>
+        </tr>
+        <tr>
+            <th>Description:</th>
+            <td>{{repo.description}}</td>
+          </tr>
+        <tr>
+          <th>Author:</th>
+          <td>{{repo.owner.login}}</td>
+        </tr>
+        <tr>
+          <th>Stars:</th>
+          <td>{{repo.stargazers_count}}</td>
+        </tr>
+        <tr>
+          <th>Watchers:</th>
+          <td>{{repo.watchers_count}}</td>
+        </tr>
+        <tr>
+          <th>Forks:</th>
+          <td>{{repo.forks_count}}</td>
+        </tr>
+      </table>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button class="btn btn-secondary" mat-button mat-dialog-close type="button" (click)="onDismiss()">OK</button>
+</mat-dialog-actions>

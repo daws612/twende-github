@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { RepoDetailsDialogComponent, RepoDetailsDialogModel } from 'app/dialogs/repo-details-dialog/repo-details-dialog.component';
+import { Repositories } from 'app/models/Repositories';
 import { DataService } from 'app/services/data.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { merge, of as observableOf, Subscription } from 'rxjs';
@@ -19,7 +22,8 @@ export class RepoListComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    public spinner: NgxSpinnerService) { }
+    public spinner: NgxSpinnerService,
+    public dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this._fetchGithubRepositories();
@@ -74,5 +78,13 @@ export class RepoListComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide(name);
     }, 1);
+  }
+
+  showRepoDetailsInDialog(repo: Repositories) {
+    const dialogData = new RepoDetailsDialogModel(repo);
+
+    const dialogRef = this.dialog.open(RepoDetailsDialogComponent, {
+      data: dialogData
+    });
   }
 }

@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
 
-        <ngx-spinner name="reposTableSpinner" [fullScreen]="false" type="ball-spin-fade" size="small" 
+        <ngx-spinner name="reposTableSpinner" [fullScreen]="false" type="ball-spin-fade" size="small" [zIndex]="101"
             bdColor="rgba(255, 255, 255, 0.78)" color="#e43f34">
             <p style="color: #e43f34">Loading</p>
         </ngx-spinner>
@@ -30,7 +30,7 @@
                         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
                         <mat-row *matRowDef="let row; columns: displayedColumns; let index = index;" matRipple
-                            class="element-row">
+                            class="element-row" (click)="showRepoDetailsInDialog(row)">
                         </mat-row>
                     </mat-table>
                 </div>

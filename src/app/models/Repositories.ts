@@ -8,7 +8,7 @@ export interface Repositories {
     //   full_name: freeCodeCamp/freeCodeCamp,
     //   private: false,
     //   html_url: https://github.com/freeCodeCamp/freeCodeCamp,
-    //   description: freeCodeCamp.org's open source codebase and curriculum. Learn to code at home.,
+    description: string,
     //   fork: false,
     //   url: https://api.github.com/repos/freeCodeCamp/freeCodeCamp,
     //   forks_url: https://api.github.com/repos/freeCodeCamp/freeCodeCamp/forks,
