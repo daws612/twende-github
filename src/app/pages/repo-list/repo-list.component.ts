@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +8,7 @@ import { DataService } from 'app/services/data.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { merge, of as observableOf, Subscription } from 'rxjs';
 import { debounceTime, startWith, delay, switchMap, map, catchError } from 'rxjs/operators';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-repo-list',
@@ -15,11 +16,13 @@ import { debounceTime, startWith, delay, switchMap, map, catchError } from 'rxjs
   styleUrls: ['./repo-list.component.css']
 })
 export class RepoListComponent implements OnInit {
-
+  @ViewChild('reposTablePaginator', { read: MatPaginator }) reposTablePaginator: MatPaginator;
+ 
   displayedColumns: string[] = ['title', 'author', 'actions'];
   dataSource = new MatTableDataSource();
   loading: boolean = true;
   firebaseRepos;
+  totalCount;
 
   constructor(
     private dataService: DataService,
@@ -28,21 +31,25 @@ export class RepoListComponent implements OnInit {
     public toastr: ToastrService,) { }
 
   ngOnInit(): void {
-    this._fetchGithubRepositories();
   }
 
+  ngAfterViewInit() {
+    this._fetchGithubRepositories();
+    //this.dataSource.paginator = this.reposTablePaginator;
+  }
+  
   ngOnDestroy() {
   }
 
   _fetchGithubRepositories() {
-    merge()
+    merge(this.reposTablePaginator.page)
       .pipe(
         debounceTime(500),
         startWith({}),
         delay(1),
         switchMap(() => {
           this.showSpinner("reposTableSpinner");
-          return this.dataService.getRepositories();
+          return this.dataService.getRepositories(this.reposTablePaginator.pageIndex, this.reposTablePaginator.pageSize);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -60,6 +67,7 @@ export class RepoListComponent implements OnInit {
   }
 
   _mapData(data) {
+    this.totalCount = data.total_count;
     return data.items;
   }
 
@@ -75,7 +83,6 @@ export class RepoListComponent implements OnInit {
   }
 
   hideSpinner(name) {
-    this.loading = false;
     setTimeout(() => {
       this.spinner.hide(name);
     }, 1);
@@ -122,11 +129,12 @@ export class RepoListComponent implements OnInit {
     firebaseRepos.forEach(firebaseRepo => {
       //find repo in githubs list and update its favorite status
       let index = githubRepos.findIndex(x => x.id == firebaseRepo.payload.doc.data().id);
-      if (index) githubRepos[index].is_favorite = firebaseRepo.payload.doc.data().is_favorite;
+      if (index > -1) githubRepos[index].is_favorite = firebaseRepo.payload.doc.data().is_favorite;
     });
 
     this.dataSource.data = githubRepos;
     this.hideSpinner("reposTableSpinner");
+    this.loading = false;
   }
 
 }
