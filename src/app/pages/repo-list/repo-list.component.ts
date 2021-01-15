@@ -19,6 +19,7 @@ export class RepoListComponent implements OnInit {
   displayedColumns: string[] = ['title', 'author', 'actions'];
   dataSource = new MatTableDataSource();
   loading: boolean = true;
+  firebaseRepos;
 
   constructor(
     private dataService: DataService,
@@ -63,8 +64,7 @@ export class RepoListComponent implements OnInit {
   }
 
   _subscribeData(newData) {
-    this.hideSpinner("reposTableSpinner");
-    this.dataSource.data = newData;
+    this.getReposFirebase(newData);
   }
 
   showSpinner(name) {
@@ -94,8 +94,8 @@ export class RepoListComponent implements OnInit {
     repo.is_favorite = !repo.is_favorite;
 
     this.dataService.createOrUpdateRepoData(repo).then(res => {
-        this.showSuccessMessage(`${repo.name} has been ${ repo.is_favorite ? 'added to': 'removed from'} your favorites`);
-      })
+      this.showSuccessMessage(`${repo.name} has been ${repo.is_favorite ? 'added to' : 'removed from'} your favorites`);
+    })
       .catch(err => {
         this.showErrorMessage(err);
       });
@@ -112,4 +112,21 @@ export class RepoListComponent implements OnInit {
       closeButton: true, disableTimeOut: true
     });
   }
+
+  getReposFirebase = (githubRepos) =>
+    this.dataService
+      .getRepos()
+      .subscribe(res => (this.mergeFirebaseWithGithub(res, githubRepos)));
+
+  mergeFirebaseWithGithub(firebaseRepos, githubRepos) {
+    firebaseRepos.forEach(firebaseRepo => {
+      //find repo in githubs list and update its favorite status
+      let index = githubRepos.findIndex(x => x.id == firebaseRepo.payload.doc.data().id);
+      if (index) githubRepos[index].is_favorite = firebaseRepo.payload.doc.data().is_favorite;
+    });
+
+    this.dataSource.data = githubRepos;
+    this.hideSpinner("reposTableSpinner");
+  }
+
 }

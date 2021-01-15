@@ -43,4 +43,8 @@ export class DataService {
       });
     });
   }
+
+  getRepos() { 
+    return this.firestore.collection("repo").snapshotChanges();
+  }
 }
