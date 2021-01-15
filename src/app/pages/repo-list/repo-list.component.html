@@ -31,6 +31,14 @@
                             </mat-cell>
                         </ng-container>
 
+                         <!-- Stars Column -->
+                         <ng-container matColumnDef="stars">
+                            <mat-header-cell *matHeaderCellDef>Star Count</mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <span>{{element.stargazers_count}}</span>
+                            </mat-cell>
+                        </ng-container>
+
                         <!--Actions Column-->
                         <ng-container matColumnDef="actions">
                             <mat-header-cell [hidden]="true" *matHeaderCellDef></mat-header-cell>

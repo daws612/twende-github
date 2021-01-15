@@ -18,7 +18,7 @@ import { MatPaginator } from '@angular/material/paginator';
 export class RepoListComponent implements OnInit {
   @ViewChild('reposTablePaginator', { read: MatPaginator }) reposTablePaginator: MatPaginator;
  
-  displayedColumns: string[] = ['title', 'author', 'actions'];
+  displayedColumns: string[] = ['title', 'author', 'stars', 'actions'];
   dataSource = new MatTableDataSource();
   loading: boolean = true;
   firebaseRepos;
@@ -109,14 +109,14 @@ export class RepoListComponent implements OnInit {
   }
 
   public showSuccessMessage(message: string) {
-    this.toastr.success(message, 'Success', { progressBar: true, progressAnimation: 'decreasing', timeOut: 5000 });
+    this.toastr.success(message, 'Success', { progressBar: true, progressAnimation: 'decreasing', timeOut: 5000, positionClass: 'toast-top-right' });
   }
 
   public showErrorMessage(error: any) {
     if (!error)
       return;
     this.toastr.error(error, 'Oops!', {
-      closeButton: true, disableTimeOut: true
+      closeButton: true, disableTimeOut: true, positionClass: 'toast-top-right'
     });
   }
 

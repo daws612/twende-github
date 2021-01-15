@@ -18,7 +18,7 @@ export class DataService {
   repositories$: BehaviorSubject<Repositories>;
 
   getRepositories(pageIndex: number, pageSize: number): Observable<Repositories> {
-    const requestUrl = `https://api.github.com/search/repositories?q=stars:%3E1&sort=stars&per_page=${pageSize}&page=${pageIndex+1}`;
+    const requestUrl = `https://api.github.com/search/repositories?q=stars:%3E1&type=public&sort=stars&per_page=${pageSize}&page=${pageIndex+1}`;
     return this.http.get<Repositories>(requestUrl, {});
   }
 
