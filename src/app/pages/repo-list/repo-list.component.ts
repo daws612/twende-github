@@ -15,6 +15,7 @@ export class RepoListComponent implements OnInit {
 
   displayedColumns: string[] = ['title', 'author'];
   dataSource = new MatTableDataSource();
+  loading: boolean = true;
 
   constructor(
     private dataService: DataService,
@@ -62,12 +63,14 @@ export class RepoListComponent implements OnInit {
   }
 
   showSpinner(name) {
+    this.loading = true;
     setTimeout(() => {
       this.spinner.show(name);
     }, 0);
   }
 
   hideSpinner(name) {
+    this.loading = false;
     setTimeout(() => {
       this.spinner.hide(name);
     }, 1);

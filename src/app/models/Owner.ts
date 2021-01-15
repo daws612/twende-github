@@ -1,0 +1,20 @@
+export interface Owner {
+    login: string,
+    id: number,
+    // "node_id": "MDEyOk9yZ2FuaXphdGlvbjk4OTI1MjI=",
+    // "avatar_url": "https://avatars0.githubusercontent.com/u/9892522?v=4",
+    // "gravatar_id": "",
+    // "url": "https://api.github.com/users/freeCodeCamp",
+    // "html_url": "https://github.com/freeCodeCamp",
+    // "followers_url": "https://api.github.com/users/freeCodeCamp/followers",
+    // "following_url": "https://api.github.com/users/freeCodeCamp/following{/other_user}",
+    // "gists_url": "https://api.github.com/users/freeCodeCamp/gists{/gist_id}",
+    // "starred_url": "https://api.github.com/users/freeCodeCamp/starred{/owner}{/repo}",
+    // "subscriptions_url": "https://api.github.com/users/freeCodeCamp/subscriptions",
+    // "organizations_url": "https://api.github.com/users/freeCodeCamp/orgs",
+    // "repos_url": "https://api.github.com/users/freeCodeCamp/repos",
+    // "events_url": "https://api.github.com/users/freeCodeCamp/events{/privacy}",
+    // "received_events_url": "https://api.github.com/users/freeCodeCamp/received_events",
+    // "type": "Organization",
+    site_admin: boolean
+}
