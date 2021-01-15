@@ -16,6 +16,10 @@
                             <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
                             <mat-cell *matCellDef="let element">
                                 <span>{{element.name}}</span>
+                                <button *ngIf="element.is_favorite"
+                                    class="ml-2 btn btn-sm btn-success btn-round btn-icon">
+                                    <i class="fa fa-heart"></i>
+                                </button>
                             </mat-cell>
                         </ng-container>
 
@@ -24,6 +28,32 @@
                             <mat-header-cell *matHeaderCellDef mat-sort-header>Author</mat-header-cell>
                             <mat-cell *matCellDef="let element">
                                 <span>{{element.owner.login}}</span>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!--Actions Column-->
+                        <ng-container matColumnDef="actions">
+                            <mat-header-cell [hidden]="true" *matHeaderCellDef></mat-header-cell>
+                            <mat-cell *matCellDef="let element; let index = index;"
+                                class="overlay-effect h-100 w-100 justify-content-end">
+
+                                <div>
+                                    <div>
+                                        <!--START products list menu-->
+                                        <div>
+                                            <ul class="navbar-nav flex-row">
+                                                <li class="">
+                                                    <button class="btn btn-sm btn-outline-success btn-round btn-icon"
+                                                        title="Add to Favorites"
+                                                        (click)="toggleFavorite($event, element)">
+                                                        <i class="fa fa-heart"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!--END products list menu-->
+                                    </div>
+                                </div>
                             </mat-cell>
                         </ng-container>
 

@@ -13,6 +13,9 @@ import { AppRoutes } from './app.routing';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HttpClientModule, } from '@angular/common/http';
+import { AngularFireModule } from "@angular/fire";
+import { environment } from "environments/environment";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
 
 
 @NgModule({
@@ -31,7 +34,9 @@ import { HttpClientModule, } from '@angular/common/http';
     FooterModule,
     FixedPluginModule,
 
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

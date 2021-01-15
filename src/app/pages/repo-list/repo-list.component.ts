@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 import { MatTableDataSource } from '@angular/material/table';
 import { RepoDetailsDialogComponent, RepoDetailsDialogModel } from 'app/dialogs/repo-details-dialog/repo-details-dialog.component';
 import { Repositories } from 'app/models/Repositories';
@@ -16,14 +16,15 @@ import { debounceTime, startWith, delay, switchMap, map, catchError } from 'rxjs
 })
 export class RepoListComponent implements OnInit {
 
-  displayedColumns: string[] = ['title', 'author'];
+  displayedColumns: string[] = ['title', 'author', 'actions'];
   dataSource = new MatTableDataSource();
   loading: boolean = true;
 
   constructor(
     private dataService: DataService,
     public spinner: NgxSpinnerService,
-    public dialog: MatDialog,) { }
+    public dialog: MatDialog,
+    public toastr: ToastrService,) { }
 
   ngOnInit(): void {
     this._fetchGithubRepositories();
@@ -85,6 +86,30 @@ export class RepoListComponent implements OnInit {
 
     const dialogRef = this.dialog.open(RepoDetailsDialogComponent, {
       data: dialogData
+    });
+  }
+
+  toggleFavorite(event, repo: Repositories) {
+    event.stopPropagation();
+    repo.is_favorite = !repo.is_favorite;
+
+    this.dataService.createOrUpdateRepoData(repo).then(res => {
+        this.showSuccessMessage(`${repo.name} has been ${ repo.is_favorite ? 'added to': 'removed from'} your favorites`);
+      })
+      .catch(err => {
+        this.showErrorMessage(err);
+      });
+  }
+
+  public showSuccessMessage(message: string) {
+    this.toastr.success(message, 'Success', { progressBar: true, progressAnimation: 'decreasing', timeOut: 5000 });
+  }
+
+  public showErrorMessage(error: any) {
+    if (!error)
+      return;
+    this.toastr.error(error, 'Oops!', {
+      closeButton: true, disableTimeOut: true
     });
   }
 }

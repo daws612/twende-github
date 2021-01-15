@@ -1,0 +1,17 @@
+
+.element-row:hover .overlay-effect {
+    opacity: 1;
+    cursor: pointer;
+}
+  
+.overlay-effect {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgb(230 230 230 / 70%);
+    overflow:hidden;
+}

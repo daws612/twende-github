@@ -3,7 +3,7 @@ import { Owner } from "./Owner";
 export interface Repositories {
     name: string;
     owner: Owner;
-    // id: 28457823,
+    id: number,
     //   node_id: MDEwOlJlcG9zaXRvcnkyODQ1NzgyMw==,
     //   full_name: freeCodeCamp/freeCodeCamp,
     //   private: false,
@@ -80,5 +80,7 @@ export interface Repositories {
     open_issues: number,
     watchers: number,
     default_branch: string,
-    score: number
+    score: number,
+
+    is_favorite: boolean;
 }
